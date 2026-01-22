@@ -565,14 +565,23 @@ onMounted(() => {
               >
                 <span class="icon-speaker"></span>
               </button>
-              <button 
+              <button
                 type="button"
-                class="btn-icon" 
+                class="btn-icon"
                 :class="{ saved: isSaved }"
                 @click.stop.prevent="saveWord"
                 :title="isSaved ? '已保存' : '保存单词'"
               >
-                <span class="icon-star" :class="{ filled: isSaved }"></span>
+                <span class="icon-star" :class="{ filled: isSaved }">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                  </svg>
+                </span>
               </button>
               <button 
                 type="button"
@@ -1049,24 +1058,29 @@ onMounted(() => {
   background: var(--btn-hover-bg, #e6e8eb);
 }
 
-/* 星形图标 */
+/* 星形图标 - 使用 SVG */
 .icon-star {
   width: 18px;
   height: 18px;
   display: inline-block;
   position: relative;
+  color: var(--text-secondary, #606266);
 }
 
-.icon-star::before {
-  content: '☆';
-  font-size: 18px;
-  line-height: 1;
-  font-style: normal;
+.icon-star svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
 }
 
-.icon-star.filled::before {
-  content: '★';
+.icon-star.filled {
   color: #f7ba2a;
+}
+
+.icon-star.filled svg {
+  fill: #f7ba2a;
+  stroke: #f7ba2a;
 }
 
 /* 标签图标 */

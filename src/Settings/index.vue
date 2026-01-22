@@ -8,6 +8,18 @@ const props = defineProps({
   }
 })
 
+// 展开收起状态
+const expandedSections = ref({
+  apiConfig: true,
+  apiGuide: false,
+  speechConfig: false,
+  dataManagement: false
+})
+
+const toggleSection = (section) => {
+  expandedSections.value[section] = !expandedSections.value[section]
+}
+
 // API配置
 const apiKey = ref('')
 const appId = ref('')
@@ -26,11 +38,26 @@ const importResult = ref(null)
 const isImporting = ref(false)
 const overwriteExisting = ref(false)
 
+// Toast 提示
+const showToast = ref(false)
+const toastMessage = ref('')
+const toastType = ref('success') // success, error
+
 // 存储键名
 const STORAGE_KEY_APIKEY = 'niutrans_apikey'
 const STORAGE_KEY_APPID = 'niutrans_appid'
 const STORAGE_KEY_SPEECH_RATE = 'speech_rate'
 const STORAGE_KEY_SPEECH_PITCH = 'speech_pitch'
+
+// 显示 Toast 提示
+const showNotification = (message, type = 'success') => {
+  toastMessage.value = message
+  toastType.value = type
+  showToast.value = true
+  setTimeout(() => {
+    showToast.value = false
+  }, 3000)
+}
 
 // 加载配置
 const loadConfig = () => {
@@ -100,10 +127,10 @@ const saveConfig = () => {
       window.services.updateApiConfig(apiKey.value.trim(), appId.value.trim())
     }
 
-    window.utools?.showNotification?.('配置已保存')
+    showNotification('✅ 配置已保存')
     testResult.value = ''
   } catch (e) {
-    window.utools?.showNotification?.('保存失败: ' + e.message)
+    showNotification('❌ 保存失败: ' + e.message, 'error')
   } finally {
     isSaving.value = false
   }
@@ -169,7 +196,7 @@ const openApplyPage = () => {
 // 测试发音
 const testSpeech = () => {
   if (!window.speechSynthesis) {
-    window.utools?.showNotification?.('当前环境不支持语音合成')
+    showNotification('当前环境不支持语音合成', 'error')
     return
   }
 
@@ -180,6 +207,7 @@ const testSpeech = () => {
   utterance.pitch = speechPitch.value
 
   window.speechSynthesis.speak(utterance)
+  showNotification('🔊 正在测试发音...')
 }
 
 // 导出数据
@@ -208,9 +236,9 @@ const exportData = (format) => {
     document.body.removeChild(a)
     URL.revokeObjectURL(url)
 
-    window.utools?.showNotification?.(`已导出 ${format.toUpperCase()}`)
+    showNotification(`✅ 已导出 ${format.toUpperCase()}`)
   } catch (e) {
-    window.utools?.showNotification?.('导出失败: ' + e.message)
+    showNotification('❌ 导出失败: ' + e.message, 'error')
   }
 }
 
@@ -225,7 +253,7 @@ const openImportModal = () => {
 // 执行导入
 const doImport = () => {
   if (!importData.value.trim()) {
-    window.utools?.showNotification?.('请输入数据')
+    showNotification('❌ 请输入数据', 'error')
     return
   }
 
@@ -241,18 +269,18 @@ const doImport = () => {
     importResult.value = result
 
     if (result.success) {
-      window.utools?.showNotification?.(
-        `导入成功！单词: ${result.importedWords}，标签: ${result.importedTags}`
+      showNotification(
+        `✅ 导入成功！单词: ${result.importedWords}，标签: ${result.importedTags}`
       )
     } else {
-      window.utools?.showNotification?.('导入失败: ' + result.error)
+      showNotification('❌ 导入失败: ' + result.error, 'error')
     }
   } catch (e) {
     importResult.value = {
       success: false,
       error: e.message
     }
-    window.utools?.showNotification?.('导入失败: ' + e.message)
+    showNotification('❌ 导入失败: ' + e.message, 'error')
   } finally {
     isImporting.value = false
   }
@@ -274,10 +302,14 @@ onMounted(() => {
 <template>
   <div class="settings-container">
     <h1 class="title">⚙️ API 设置</h1>
-    
+
     <!-- API配置表单 -->
     <div class="settings-card">
-      <h3>小牛翻译 API 配置</h3>
+      <div class="section-header" @click="toggleSection('apiConfig')">
+        <h3>小牛翻译 API 配置</h3>
+        <span class="toggle-icon" :class="{ expanded: expandedSections.apiConfig }">▼</span>
+      </div>
+      <div class="section-content" :class="{ collapsed: !expandedSections.apiConfig }">
       
       <div class="form-group">
         <label>API-KEY <span class="optional">(可选，留空使用默认密钥)</span></label>
@@ -316,11 +348,16 @@ onMounted(() => {
       <button class="btn-text-danger" @click="clearConfig" v-if="apiKey || appId">
         恢复默认密钥
       </button>
+      </div>
     </div>
-    
+
     <!-- 申请指南 -->
     <div class="guide-card">
-      <h3>📝 如何申请 API 密钥</h3>
+      <div class="section-header" @click="toggleSection('apiGuide')">
+        <h3>📝 如何申请 API 密钥</h3>
+        <span class="toggle-icon" :class="{ expanded: expandedSections.apiGuide }">▼</span>
+      </div>
+      <div class="section-content" :class="{ collapsed: !expandedSections.apiGuide }">
       
       <div class="steps">
         <div class="step">
@@ -363,11 +400,16 @@ onMounted(() => {
       <div class="tip">
         <strong>💡 提示：</strong>使用默认共享密钥即可正常翻译，配置自己的密钥可获得更好的服务稳定性
       </div>
+      </div>
     </div>
 
     <!-- 发音配置 -->
     <div class="settings-card">
-      <h3>🔊 发音设置</h3>
+      <div class="section-header" @click="toggleSection('speechConfig')">
+        <h3>🔊 发音设置</h3>
+        <span class="toggle-icon" :class="{ expanded: expandedSections.speechConfig }">▼</span>
+      </div>
+      <div class="section-content" :class="{ collapsed: !expandedSections.speechConfig }">
 
       <div class="form-group">
         <label>语速: {{ speechRate.toFixed(1) }}</label>
@@ -409,11 +451,16 @@ onMounted(() => {
           💾 保存配置
         </button>
       </div>
+      </div>
     </div>
 
     <!-- 数据管理 -->
     <div class="settings-card">
-      <h3>💾 数据管理</h3>
+      <div class="section-header" @click="toggleSection('dataManagement')">
+        <h3>💾 数据管理</h3>
+        <span class="toggle-icon" :class="{ expanded: expandedSections.dataManagement }">▼</span>
+      </div>
+      <div class="section-content" :class="{ collapsed: !expandedSections.dataManagement }">
 
       <div class="export-section">
         <p class="section-desc">导出您的数据以备份或迁移</p>
@@ -434,6 +481,7 @@ onMounted(() => {
         <button class="btn-primary" @click="openImportModal">
           📥 导入数据
         </button>
+      </div>
       </div>
     </div>
 
@@ -485,6 +533,13 @@ onMounted(() => {
         </div>
       </div>
     </div>
+
+    <!-- Toast 提示 -->
+    <transition name="toast-fade">
+      <div v-if="showToast" class="toast" :class="toastType">
+        {{ toastMessage }}
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -511,11 +566,44 @@ onMounted(() => {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.settings-card h3,
-.guide-card h3 {
-  margin: 0 0 14px 0;
+/* 展开收起样式 */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 14px;
+}
+
+.section-header h3 {
+  margin: 0;
   font-size: 14px;
   color: var(--text-primary, #303133);
+}
+
+.toggle-icon {
+  font-size: 12px;
+  color: var(--text-secondary, #909399);
+  transition: transform 0.3s ease;
+  transform: rotate(-90deg);
+}
+
+.toggle-icon.expanded {
+  transform: rotate(0deg);
+}
+
+.section-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  max-height: 2000px;
+  opacity: 1;
+}
+
+.section-content.collapsed {
+  max-height: 0;
+  opacity: 0;
+  margin-bottom: 0;
 }
 
 .form-group {
@@ -829,5 +917,56 @@ onMounted(() => {
 
 .import-result p {
   margin: 4px 0;
+}
+
+/* Toast 提示 */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 200px;
+  justify-content: center;
+}
+
+.toast.success {
+  background: linear-gradient(135deg, #67c23a, #85ce61);
+  color: #fff;
+}
+
+.toast.error {
+  background: linear-gradient(135deg, #f56c6c, #f78989);
+  color: #fff;
+}
+
+.toast-fade-enter-active,
+.toast-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.toast-fade-enter-from {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-20px);
+}
+
+.toast-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-20px);
+}
+
+/* 深色模式下的 Toast */
+@media (prefers-color-scheme: dark) {
+  .toast {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
 }
 </style>
