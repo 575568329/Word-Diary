@@ -1,0 +1,58 @@
+{
+  "main": "index.html",
+  "preload": "preload/services.js",
+  "logo": "logo.png",
+  "development": {
+    "main": "http://localhost:5173"
+  },
+  "features": [
+    {
+      "code": "translate",
+      "explain": "翻译单词或短语，支持中英互译",
+      "cmds": [
+        "翻译",
+        "查词",
+        "单词",
+        {
+          "type": "over",
+          "label": "翻译选中文本"
+        }
+      ]
+    },
+    {
+      "code": "review",
+      "explain": "复习已保存的单词，基于记忆曲线",
+      "cmds": [
+        "复习",
+        "复习单词",
+        "记忆"
+      ]
+    },
+    {
+      "code": "wordlist",
+      "explain": "查看和管理已保存的单词本",
+      "cmds": [
+        "单词本",
+        "单词列表",
+        "我的单词"
+      ]
+    },
+    {
+      "code": "tags",
+      "explain": "管理单词标签",
+      "cmds": [
+        "标签管理",
+        "标签"
+      ]
+    },
+    {
+      "code": "settings",
+      "explain": "设置翻译API密钥",
+      "cmds": [
+        "设置",
+        "API设置",
+        "密钥设置"
+      ]
+    }
+  ]
+}
