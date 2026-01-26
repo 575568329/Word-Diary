@@ -8,8 +8,11 @@ if (typeof window !== 'undefined') {
   document.dispatchEvent(new CustomEvent('servicesCoreReady'))
 }
 
-// 开发环境加载 mock（生产环境由 preload 提供真实 API）
-import './dev-mock.js'
+// 只在浏览器开发环境加载 mock（uTools 生产环境由 preload 提供真实 API）
+// 检测是否在 uTools 环境中
+if (typeof window !== 'undefined' && !window.utools) {
+  import('./dev-mock.js')
+}
 
 import { createApp } from 'vue'
 import './main.css'

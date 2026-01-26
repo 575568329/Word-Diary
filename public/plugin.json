@@ -5,6 +5,7 @@
   "development": {
     "main": "http://localhost:5173"
   },
+  "officialWebsite": "https://github.com/575568329/Word-Diary",
   "features": [
     {
       "code": "translate",
