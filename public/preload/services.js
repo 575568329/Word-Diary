@@ -11,10 +11,7 @@ const https = require('https')
 
 // ==================== 翻译配置 ====================
 
-// LibreTranslate API（默认）
-const LIBRETRANSLATE_API = 'https://libretranslate.com/translate'
-
-// 小牛翻译 API（可选）
+// 小牛翻译 API
 const NIUTRANS_API = 'https://api.niutrans.com/NiuTransServer/translation'
 const NIUTRANS_DEFAULT_API_KEY = '5e690ed1f4cbdb16d88a3f6a07e9f185' // 默认共享密钥
 
@@ -36,75 +33,6 @@ function getNiuTransApiKey() {
 // 更新API配置（供设置页面调用）
 function updateApiConfig(apiKey, appId) {
   console.log('API配置已更新')
-}
-
-// ==================== LibreTranslate 翻译服务 ====================
-
-/**
- * 使用 LibreTranslate API 进行翻译（默认）
- * @param {string} text - 要翻译的文本
- * @param {string} from - 源语言 (en, zh)
- * @param {string} to - 目标语言 (zh, en)
- */
-function translateWithLibre(text, from, to) {
-  return new Promise((resolve, reject) => {
-    const postData = JSON.stringify({
-      q: text,
-      source: from,
-      target: to,
-      format: 'text'
-    })
-
-    const urlObj = new URL(LIBRETRANSLATE_API)
-
-    const options = {
-      hostname: urlObj.hostname,
-      port: 443,
-      path: urlObj.pathname,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(postData)
-      }
-    }
-
-    const req = https.request(options, (res) => {
-      let data = ''
-      res.on('data', (chunk) => {
-        data += chunk
-      })
-      res.on('end', () => {
-        try {
-          const result = JSON.parse(data)
-
-          // 检查是否有错误
-          if (result.error) {
-            reject({
-              success: false,
-              error: `翻译失败: ${result.error}`
-            })
-            return
-          }
-
-          resolve({
-            success: true,
-            translation: result.translatedText || '',
-            dict: [],
-            src: from
-          })
-        } catch (e) {
-          reject({ success: false, error: '解析翻译结果失败' })
-        }
-      })
-    })
-
-    req.on('error', (e) => {
-      reject({ success: false, error: '网络请求失败: ' + e.message })
-    })
-
-    req.write(postData)
-    req.end()
-  })
 }
 
 // ==================== 小牛翻译服务 ====================
@@ -180,8 +108,8 @@ function translateWithNiuTrans(text, from, to, apiKey) {
 // ==================== 统一翻译接口 ====================
 
 /**
- * 翻译服务（自动选择 API）
- * 优先使用用户配置的小牛翻译，如果未配置则使用 LibreTranslate
+ * 翻译服务（使用小牛翻译 API）
+ * 优先使用用户配置的小牛翻译密钥，如果未配置则使用默认共享密钥
  * @param {string} text - 要翻译的文本
  * @param {string} from - 源语言 (auto, zh, en)
  * @param {string} to - 目标语言 (zh, en)
@@ -191,20 +119,13 @@ function translate(text, from = 'auto', to = 'zh') {
   const niuTransApiKey = getNiuTransApiKey()
 
   if (niuTransApiKey && niuTransApiKey.trim()) {
-    // 使用小牛翻译
-    console.log('使用小牛翻译 API')
+    // 使用用户配置的小牛翻译密钥
+    console.log('使用小牛翻译 API (用户密钥)')
     return translateWithNiuTrans(text, from, to, niuTransApiKey.trim())
   } else {
-    // 使用 LibreTranslate（默认）
-    // LibreTranslate 不支持 auto，需要检测语言
-    let detectFrom = from
-    if (from === 'auto') {
-      // 简单检测：如果是中文则从 zh 翻译，否则从 en 翻译
-      detectFrom = /[\u4e00-\u9fa5]/.test(text) ? 'zh' : 'en'
-    }
-
-    console.log('使用 LibreTranslate API')
-    return translateWithLibre(text, detectFrom, to)
+    // 使用默认的小牛翻译共享密钥
+    console.log('使用小牛翻译 API (默认共享密钥)')
+    return translateWithNiuTrans(text, from, to, NIUTRANS_DEFAULT_API_KEY)
   }
 }
 

@@ -15,7 +15,7 @@ const words = ref([])
 // 新建标签
 const showCreateModal = ref(false)
 const newTagName = ref('')
-const newTagColor = ref('#409eff')
+const newTagColor = ref('#FF9F43')
 
 // 编辑标签
 const showEditModal = ref(false)
@@ -29,7 +29,7 @@ const tagToDelete = ref(null)
 
 // 预设颜色
 const presetColors = [
-  '#f56c6c', '#e6a23c', '#67c23a', '#409eff', '#909399',
+  '#f56c6c', '#e6a23c', '#67c23a', '#FF9F43', '#909399',
   '#f06595', '#845ef7', '#5c7cfa', '#22b8cf', '#20c997',
   '#fab005', '#fd7e14', '#ff6b6b', '#cc5de8', '#7950f2',
   '#be4bdb', '#4c6ef5', '#15aabf', '#12b886', '#82c91e'
@@ -360,7 +360,7 @@ onMounted(() => {
 
 .btn-create {
   padding: 10px 20px;
-  background: linear-gradient(135deg, #409eff, #66b1ff);
+  background: linear-gradient(135deg, #FF9F43, #FFB347);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -536,7 +536,7 @@ onMounted(() => {
 
 .form-input:focus {
   outline: none;
-  border-color: #409eff;
+  border-color: #FF9F43;
 }
 
 .color-preview {
@@ -580,7 +580,7 @@ onMounted(() => {
 
 .color-option.selected {
   border-color: #fff;
-  box-shadow: 0 0 0 2px #409eff;
+  box-shadow: 0 0 0 2px #FF9F43;
 }
 
 .modal-actions {
@@ -602,7 +602,7 @@ onMounted(() => {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #409eff, #66b1ff);
+  background: linear-gradient(135deg, #FF9F43, #FFB347);
   color: #fff;
 }
 

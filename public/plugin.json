@@ -47,6 +47,15 @@
       ]
     },
     {
+      "code": "statistics",
+      "explain": "查看学习统计数据和进度",
+      "cmds": [
+        "统计",
+        "学习统计",
+        "数据统计"
+      ]
+    },
+    {
       "code": "settings",
       "explain": "设置翻译API密钥",
       "cmds": [

@@ -640,7 +640,7 @@ onMounted(() => {
 
 .form-input:focus {
   outline: none;
-  border-color: #409eff;
+  border-color: #FF9F43;
 }
 
 .test-result {
@@ -679,7 +679,7 @@ onMounted(() => {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #409eff, #66b1ff);
+  background: linear-gradient(135deg, #FF9F43, #FFB347);
   color: #fff;
 }
 
@@ -734,7 +734,7 @@ onMounted(() => {
 .step-num {
   width: 22px;
   height: 22px;
-  background: linear-gradient(135deg, #409eff, #66b1ff);
+  background: linear-gradient(135deg, #FF9F43, #FFB347);
   color: #fff;
   border-radius: 50%;
   display: flex;
@@ -768,7 +768,7 @@ onMounted(() => {
   background: #ecf5ff;
   border: 1px solid #409eff;
   border-radius: 6px;
-  color: #409eff;
+  color: #FF9F43;
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;

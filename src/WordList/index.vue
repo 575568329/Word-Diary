@@ -544,8 +544,8 @@ onMounted(() => {
 }
 
 .sort-btn.active {
-  background: #409eff;
-  border-color: #409eff;
+  background: #FF9F43;
+  border-color: #FF9F43;
   color: #fff;
 }
 
@@ -802,7 +802,7 @@ onMounted(() => {
 .form-input:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: #409eff;
+  border-color: #FF9F43;
 }
 
 .tag-list {
@@ -840,7 +840,7 @@ onMounted(() => {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #409eff, #66b1ff);
+  background: linear-gradient(135deg, #FF9F43, #FFB347);
   color: #fff;
 }
 

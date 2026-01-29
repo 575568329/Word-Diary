@@ -778,24 +778,26 @@ onMounted(() => {
   overflow-y: auto;
 }
 
-/* 输入区域 */
+/* 输入区域 - 温暖柔和 */
 .input-area {
   max-width: 100%;
-  margin: 0 auto 12px;
+  margin: 0 auto 16px;
 }
 
 .input-wrapper {
   display: flex;
   align-items: center;
   background: var(--card-bg, #fff);
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  padding: 4px;
-  transition: box-shadow 0.2s;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  padding: 6px;
+  border: 2px solid var(--border-light, transparent);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .input-wrapper:focus-within {
-  box-shadow: 0 4px 20px rgba(64, 158, 255, 0.2);
+  box-shadow: 0 0 0 4px rgba(255, 159, 67, 0.15), var(--shadow-lg);
+  border-color: #FF9F43;
 }
 
 .search-input {
@@ -833,26 +835,32 @@ onMounted(() => {
 }
 
 .btn-search {
-  padding: 10px 20px;
-  background: linear-gradient(135deg, #409eff, #66b1ff);
-  color: #fff;
+  padding: 12px 24px;
+  background: var(--primary-gradient);
+  color: #FFF;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
-  margin-right: 4px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-right: 6px;
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-search:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(64, 158, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-search:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .btn-search:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  transform: none !important;
 }
 
 .content-area {
@@ -871,7 +879,7 @@ onMounted(() => {
   width: 32px;
   height: 32px;
   border: 3px solid #e0e0e0;
-  border-top-color: #409eff;
+  border-top-color: #FF9F43;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin-bottom: 10px;
@@ -912,8 +920,8 @@ onMounted(() => {
 
 .btn-manual:hover {
   background: #ecf5ff;
-  border-color: #409eff;
-  color: #409eff;
+  border-color: #FF9F43;
+  color: #FF9F43;
 }
 
 /* 手动输入模式 */
@@ -938,7 +946,7 @@ onMounted(() => {
   margin: 0 0 12px 0;
   font-size: 18px;
   font-weight: 600;
-  color: #409eff;
+  color: #FF9F43;
 }
 
 .manual-textarea {
@@ -977,7 +985,7 @@ onMounted(() => {
 }
 
 .manual-actions .btn-primary {
-  background: linear-gradient(135deg, #409eff, #66b1ff);
+  background: linear-gradient(135deg, #FF9F43, #FFB347);
   color: #fff;
 }
 
@@ -992,7 +1000,7 @@ onMounted(() => {
   background: #ecf5ff;
   border: 1px solid #409eff;
   border-radius: 12px;
-  color: #409eff;
+  color: #FF9F43;
   font-size: 12px;
   cursor: pointer;
   transition: all 0.2s;
@@ -1000,7 +1008,7 @@ onMounted(() => {
 }
 
 .btn-sync:hover {
-  background: #409eff;
+  background: #FF9F43;
   color: #fff;
 }
 
@@ -1015,24 +1023,34 @@ onMounted(() => {
 
 .translation-card {
   background: var(--card-bg, #fff);
-  border-radius: 10px;
-  padding: 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light, transparent);
+  transition: all 0.3s ease;
+}
+
+.translation-card:hover {
+  box-shadow: var(--shadow-lg);
 }
 
 .word-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 .source-word {
   margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--text-primary, #303133);
+  font-size: 24px;
+  font-weight: 700;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   word-break: break-word;
+  letter-spacing: -0.5px;
 }
 
 .action-buttons {
@@ -1152,7 +1170,7 @@ onMounted(() => {
 
 .btn-speak-inline:hover {
   background: var(--btn-bg, #f5f7fa);
-  color: #409eff;
+  color: #FF9F43;
 }
 
 .translation-text {
@@ -1243,7 +1261,7 @@ onMounted(() => {
 }
 
 .edit-btn:hover {
-  color: #409eff;
+  color: #FF9F43;
 }
 
 .delete-btn:hover {
@@ -1281,7 +1299,7 @@ onMounted(() => {
 
 .btn-add-tag {
   padding: 8px 16px;
-  background: #409eff;
+  background: #FF9F43;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -1291,7 +1309,7 @@ onMounted(() => {
 }
 
 .btn-add-tag:hover:not(:disabled) {
-  background: #66b1ff;
+  background: #FFB347;
 }
 
 .btn-add-tag:disabled {
@@ -1447,7 +1465,7 @@ onMounted(() => {
 
 .btn-save {
   padding: 8px 20px;
-  background: #409eff;
+  background: #FF9F43;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -1457,7 +1475,7 @@ onMounted(() => {
 }
 
 .btn-save:hover {
-  background: #66b1ff;
+  background: #FFB347;
 }
 
 .dict-info {
@@ -1472,7 +1490,7 @@ onMounted(() => {
 }
 
 .pos {
-  background: #409eff;
+  background: #FF9F43;
   color: #fff;
   padding: 2px 8px;
   border-radius: 4px;

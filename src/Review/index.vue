@@ -836,7 +836,7 @@ onUnmounted(() => {
 }
 
 .stat-card.highlight {
-  background: linear-gradient(135deg, #409eff, #66b1ff);
+  background: linear-gradient(135deg, #FF9F43, #FFB347);
   color: #fff;
 }
 
@@ -891,11 +891,11 @@ onUnmounted(() => {
 }
 
 .mode-option:hover {
-  border-color: #409eff;
+  border-color: #FF9F43;
 }
 
 .mode-option.active {
-  border-color: #409eff;
+  border-color: #FF9F43;
   background: rgba(64, 158, 255, 0.05);
 }
 
@@ -943,13 +943,13 @@ onUnmounted(() => {
 }
 
 .method-option:hover {
-  border-color: #409eff;
+  border-color: #FF9F43;
 }
 
 .method-option.active {
-  border-color: #409eff;
+  border-color: #FF9F43;
   background: rgba(64, 158, 255, 0.1);
-  color: #409eff;
+  color: #FF9F43;
 }
 
 .method-option input {
@@ -984,13 +984,13 @@ onUnmounted(() => {
 }
 
 .typing-option:hover {
-  border-color: #409eff;
+  border-color: #FF9F43;
 }
 
 .typing-option.active {
-  border-color: #409eff;
+  border-color: #FF9F43;
   background: rgba(64, 158, 255, 0.1);
-  color: #409eff;
+  color: #FF9F43;
 }
 
 .typing-option input {
@@ -1056,7 +1056,7 @@ onUnmounted(() => {
 .btn-primary {
   width: 100%;
   padding: 10px 20px;
-  background: linear-gradient(135deg, #409eff, #66b1ff);
+  background: linear-gradient(135deg, #FF9F43, #FFB347);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -1180,8 +1180,8 @@ onUnmounted(() => {
 
 .btn-reveal:hover {
   background: var(--reveal-hover-bg, #ecf5ff);
-  border-color: #409eff;
-  color: #409eff;
+  border-color: #FF9F43;
+  color: #FF9F43;
 }
 
 .answer-area {
@@ -1195,7 +1195,7 @@ onUnmounted(() => {
 
 .translation {
   font-size: 18px;
-  color: #409eff;
+  color: #FF9F43;
   margin-bottom: 8px;
   display: flex;
   align-items: center;
@@ -1303,7 +1303,7 @@ onUnmounted(() => {
 }
 
 .btn-text:hover {
-  color: #409eff;
+  color: #FF9F43;
 }
 
 .btn-exit {
@@ -1506,7 +1506,7 @@ onUnmounted(() => {
 
 .typing-input:focus {
   outline: none;
-  border-color: #409eff;
+  border-color: #FF9F43;
 }
 
 .typing-input.correct {
@@ -1525,7 +1525,7 @@ onUnmounted(() => {
 
 .btn-verify {
   padding: 12px 20px;
-  background: linear-gradient(135deg, #409eff, #66b1ff);
+  background: linear-gradient(135deg, #FF9F43, #FFB347);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -1563,7 +1563,7 @@ onUnmounted(() => {
 }
 
 .verify-result strong {
-  color: #409eff;
+  color: #FF9F43;
 }
 
 .typing-actions {
@@ -1590,7 +1590,7 @@ onUnmounted(() => {
 
 .btn-next:hover {
   background: #e6e8eb;
-  color: #409eff;
+  color: #FF9F43;
 }
 
 /* 深色模式 */
